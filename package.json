@@ -1,0 +1,21 @@
+{
+  "name": "marka",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "postbuild": "node betik/gorsel.js && mkdir -p dist/font dist/stil dist/betik && cp -R font/. dist/font/ && cp stil/fonts.css stil/landing.css dist/stil/ && cp betik/ayarlar.js betik/site.js betik/sepet.js dist/betik/ && cp robots.txt sitemap.xml dist/",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "gsap": "^3.12.5",
+    "lenis": "^1.1.18",
+    "three": "^0.172.0"
+  },
+  "devDependencies": {
+    "sharp": "^0.35.3",
+    "vite": "^5.4.11"
+  }
+}

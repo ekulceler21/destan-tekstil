@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://destantekstil.com.tr/sitemap.xml
