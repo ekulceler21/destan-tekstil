@@ -4,8 +4,6 @@
         cartItemsContainer: document.getElementById('cart-items-container'),
         emptyCartSection: document.getElementById('empty-cart-section'),
         cartContentSection: document.getElementById('cart-content-section'),
-        cartSubtotalSpan: document.getElementById('cart-subtotal'),
-        cartTotalSpan: document.getElementById('cart-total'),
         cartCountHeader: document.querySelector('.cart-icon .cart-count'),
         cartCountMobile: document.querySelector('.mobile-menu .cart-count-mobile'),
         checkoutWhatsappBtn: document.getElementById('checkout-whatsapp-btn')
@@ -36,11 +34,6 @@
         } catch (e) {
             console.error('Sepet localStorage verisi kaydedilirken hata:', e);
         }
-    }
-
-    function calculateCartTotals(cart) {
-        const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-        return { subtotal, total: subtotal };
     }
 
     // --- 3. DOM İşleme ve Render Fonksiyonları ---
@@ -83,7 +76,6 @@
                         <h3>${item.name}</h3>
                         ${sizeText ? `<p>${sizeText}</p>` : ''}
                         ${colorText ? `<p>${colorText}</p>` : ''}
-                        <p class="item-price">₺ ${(item.price * item.quantity).toFixed(2).replace('.', ',')}</p>
                         <div class="quantity-controls">
                             <button class="decrease-quantity-btn" data-item-key="${getItemKey(item)}">-</button>
                             <input type="number" class="item-quantity" value="${item.quantity}" min="1" data-item-key="${getItemKey(item)}" aria-label="Adet">
@@ -94,9 +86,6 @@
                 `;
                 DOM.cartItemsContainer.appendChild(cartItemDiv);
             });
-            const { subtotal, total } = calculateCartTotals(cart);
-            if (DOM.cartSubtotalSpan) DOM.cartSubtotalSpan.textContent = `₺ ${subtotal.toFixed(2).replace('.', ',')}`;
-            if (DOM.cartTotalSpan) DOM.cartTotalSpan.textContent = `₺ ${total.toFixed(2).replace('.', ',')}`;
         }
         updateCartCountDisplays();
     }
@@ -170,17 +159,15 @@
             alert('Şu anda WhatsApp siparişi alınamıyor. Telefon numarası henüz tanımlanmadı.');
             return;
         }
-        const { total } = calculateCartTotals(cart);
         let whatsappMessage = `Merhaba! Destan Tekstil'den sipariş vermek istiyorum.\n\n`;
         whatsappMessage += `--- Ürünlerim ---\n`;
         cart.forEach((item, index) => {
             const sizeText = item.size ? `, Beden: ${item.size}` : '';
             const colorText = item.color ? `, Renk: ${item.color}` : '';
-            whatsappMessage += `${index + 1}. ${item.name}${sizeText}${colorText} (x${item.quantity}) - ₺ ${(item.price * item.quantity).toFixed(2).replace('.', ',')}\n`;
+            whatsappMessage += `${index + 1}. ${item.name}${sizeText}${colorText} (x${item.quantity})\n`;
         });
         whatsappMessage += `-------------------\n`;
-        whatsappMessage += `*Sipariş Toplamı: ₺ ${total.toFixed(2).replace('.', ',')}*\n\n`;
-        whatsappMessage += `Lütfen siparişi tamamlamama yardımcı olur musunuz?`;
+        whatsappMessage += `Lütfen bana fiyat teklifi iletir misiniz?`;
         const encodedMessage = encodeURIComponent(whatsappMessage);
         const whatsappLink = `https://wa.me/${CONFIG.whatsappPhoneNumber}?text=${encodedMessage}`;
         window.open(whatsappLink, '_blank');

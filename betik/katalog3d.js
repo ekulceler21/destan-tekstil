@@ -430,9 +430,6 @@ function renderStaticGrid(items, mount) {
   mount.style.touchAction = 'auto';
   mount.style.cursor = 'default';
 
-  const priceTL = (price) =>
-    price != null ? price.toLocaleString('tr-TR', { style: 'currency', currency: 'TRY' }) : '';
-
   const cards = (Array.isArray(items) ? items : [])
     .map((product) => {
       const imageHtml =
@@ -445,7 +442,6 @@ function renderStaticGrid(items, mount) {
             ${imageHtml}
             <div class="product-info">
               <h3 class="product-title">${product.name}</h3>
-              <p class="product-price"><span class="new-price">${priceTL(product.price)}</span></p>
             </div>
           </a>
         </div>

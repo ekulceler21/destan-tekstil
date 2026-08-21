@@ -200,24 +200,23 @@ header {
   color: var(--accent-b);
 }
 
-/* Mobil menü çekmecesi — transform tabanlı; layout taşması yaratmaz */
+/* Mobil menü çekmecesi */
 .mobile-menu {
     position: fixed;
     top: 0;
-    right: 0;
-    transform: translateX(100%);
+    right: -100%;
     width: 280px;
     height: 100%;
     background-color: var(--bg-soft);
     border-left: 1px solid var(--rule);
     box-shadow: -5px 0 15px rgba(194, 65, 12, 0.12);
-    transition: transform 0.3s ease-in-out;
+    transition: right 0.3s ease-in-out;
     z-index: 1000;
     padding-top: 5rem;
 }
 
 .mobile-menu.active {
-    transform: translateX(0);
+    right: 0;
 }
 
 .mobile-menu ul {
@@ -650,11 +649,14 @@ a.list__name:hover {
   display: inline-flex;
   align-items: center;
   gap: 12px;
+  max-width: 100%;
   font-family: var(--font-display);
-  font-size: clamp(32px, 5vw, 64px);
+  font-size: clamp(22px, 6.2vw, 64px);
   line-height: 1.1;
   margin-bottom: clamp(48px, 8vh, 80px);
   transition: color 0.35s ease;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .contact__email:hover {

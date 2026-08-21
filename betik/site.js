@@ -299,9 +299,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Ürün Render Etme ---
     function renderProductCard(product) {
-        const priceHtml = product.oldPrice ?
-            `<span class="old-price">${formatPrice(product.oldPrice)}</span><span class="new-price">${formatPrice(product.price)}</span>` :
-            `<span class="new-price">${formatPrice(product.price)}</span>`;
         const imageHtml = (product.images && product.images.length > 0)
             ? `<img src="${product.images[0]}" alt="${product.name}" class="product-image" loading="lazy" decoding="async" onerror="gorselWebpYedek(this)">`
             : `<div class="product-image product-image-placeholder"><svg class="icon" aria-hidden="true"><use href="#icon-tshirt"></use></svg><span>Ürün Görseli</span></div>`;
@@ -316,7 +313,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="product-info">
                         <h3 class="product-title">${product.name}</h3>
                         ${colorInfo}
-                        <p class="product-price">${priceHtml}</p>
                         <button class="btn add-to-cart-quick" data-product-id="${product.id}">Detayları Gör</button>
                     </div>
                 </a>
@@ -384,18 +380,10 @@ document.addEventListener('DOMContentLoaded', () => {
             name: product.name,
             description: product.seoDesc || product.description,
             image: product.images.map(img => 'https://destantekstil.com.tr/' + img.replace(/^\//, '')),
-            brand: { '@type': 'Brand', name: 'Destan Tekstil' },
-            offers: {
-                '@type': 'Offer',
-                price: product.price,
-                priceCurrency: 'TRY',
-                availability: 'https://schema.org/InStock',
-                url: 'https://destantekstil.com.tr/urun.html?id=' + productId
-            }
+            brand: { '@type': 'Brand', name: 'Destan Tekstil' }
         });
 
         document.getElementById('product-title').textContent = product.name;
-        document.getElementById('product-price').textContent = formatPrice(product.price);
         document.getElementById('product-description').textContent = product.description;
 
         const mainImage = document.getElementById('main-product-image');
