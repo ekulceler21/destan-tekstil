@@ -32,6 +32,9 @@
 html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* Mobilde yatay taşma / elastik boşluk engellenir */
+    overflow-x: hidden;
+    overflow-x: clip;
 }
 
 body {
@@ -264,23 +267,24 @@ position: relative;
     }
 }
 
-/* Mobil menü çekmecesi */
+/* Mobil menü çekmecesi — transform tabanlı; layout taşması yaratmaz */
 .mobile-menu {
     position: fixed;
     top: 0;
-    right: -100%;
+    right: 0;
+    transform: translateX(100%);
     width: 280px;
     height: 100%;
     background-color: var(--bg-soft);
     border-left: 1px solid var(--rule);
     box-shadow: -5px 0 15px rgba(194, 65, 12, 0.12);
-    transition: right 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out;
     z-index: 1000;
     padding-top: 5rem;
 }
 
 .mobile-menu.active {
-    right: 0;
+    transform: translateX(0);
 }
 
 .mobile-menu ul {
@@ -1380,4 +1384,50 @@ footer {
     vertical-align: -0.125em;
     fill: currentColor;
     flex-shrink: 0;
+}
+
+/* ── Sepete ekleme bildirimi (toast) ─────────────────────────── */
+#sepet-toast {
+    position: fixed;
+    left: 50%;
+    bottom: max(24px, env(safe-area-inset-bottom));
+    transform: translate(-50%, 200%);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    max-width: calc(100vw - 32px);
+    padding: 13px 22px;
+    border-radius: 999px;
+    background-color: var(--fg);
+    color: #fff6ee;
+    font-family: var(--font-body);
+    font-weight: bold;
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    box-shadow: 0 10px 30px rgba(138, 58, 11, 0.35);
+    z-index: 1200;
+    pointer-events: none;
+    transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.15), opacity 0.3s ease;
+    opacity: 0;
+}
+
+#sepet-toast.show {
+    transform: translate(-50%, 0);
+    opacity: 1;
+}
+
+#sepet-toast .toast-check {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: var(--accent-b);
+    color: #fff6ee;
+    font-size: 0.75rem;
 }

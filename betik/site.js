@@ -258,6 +258,24 @@ document.addEventListener('DOMContentLoaded', () => {
         updateCartCount();
     }
 
+    // --- Sepet bildirimi (toast) ---
+    let toastTimer = null;
+    function showCartToast(message) {
+        let toast = document.getElementById('sepet-toast');
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.id = 'sepet-toast';
+            toast.setAttribute('role', 'status');
+            toast.setAttribute('aria-live', 'polite');
+            toast.innerHTML = '<span class="toast-check">✓</span><span class="toast-text"></span>';
+            document.body.appendChild(toast);
+        }
+        toast.querySelector('.toast-text').textContent = message;
+        toast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toast.classList.remove('show'), 2600);
+    }
+
     function addToCart(productId, selectedSize, selectedColor, quantity) {
         const product = products.find(p => p.id === productId);
         if (!product) return;
@@ -276,6 +294,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
         saveCart();
+        showCartToast(`${quantity}x "${product.name}" sepete eklendi`);
     }
 
     // --- Ürün Render Etme ---
