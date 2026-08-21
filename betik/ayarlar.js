@@ -15,8 +15,10 @@ window.SITE_AYARLAR = {
 
 (function () {
   var a = window.SITE_AYARLAR || {};
-  var numara = a.whatsappNumara || '90 505 514 14 11';
-  var yazi = a.whatsappYazi || '90 505 514 14 11';
+  /* wa.me yalnızca rakamlardan oluşan numarayla çalışır;
+     boşluk/tire/parantez temizlenir ki mobilde WhatsApp uygulaması açılsın. */
+  var numara = String(a.whatsappNumara || '').replace(/\D/g, '');
+  var yazi = a.whatsappYazi || '';
 
   if (numara) {
     document.querySelectorAll('[data-whatsapp]').forEach(function (el) {

@@ -13,7 +13,9 @@
 
     const CONFIG = {
         whatsappPhoneNumber:
-            (typeof window.SITE_AYARLAR !== 'undefined' && window.SITE_AYARLAR.whatsappNumara) || ''
+            (typeof window.SITE_AYARLAR !== 'undefined' && window.SITE_AYARLAR.whatsappNumara
+                ? String(window.SITE_AYARLAR.whatsappNumara).replace(/\D/g, '')
+                : '') || ''
     };
 
     // --- 2. Yardımcı ve Veri Yönetimi Fonksiyonları ---
