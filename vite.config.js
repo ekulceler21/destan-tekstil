@@ -2,6 +2,7 @@ import { resolve } from 'node:path';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
+  base: process.env.GITHUB_PAGES ? '/destan-tekstil/' : '/',
   server: {
     port: 5173,
     strictPort: false,
