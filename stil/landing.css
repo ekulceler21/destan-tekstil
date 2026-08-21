@@ -41,7 +41,8 @@ body {
     font-family: var(--font-body);
     background-color: var(--bg);
     color: var(--fg);
-    overflow-x: hidden;
+    /* NOT: body'de overflow-x YOK — aksi halde sticky header kırılır.
+       Yatay taşma koruması html üzerinde. */
 }
 
 h1, h2, h3, h4, .logo, .btn, .section-title, .product-title, .cart-page-content .section-title,

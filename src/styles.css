@@ -45,7 +45,8 @@ body {
   font-family: var(--font-body);
   font-size: 16px;
   line-height: 1.65;
-  overflow-x: hidden;
+  /* NOT: body'de overflow-x YOK — aksi halde sticky header kırılır.
+     Yatay taşma koruması html üzerinde. */
 }
 
 a {
