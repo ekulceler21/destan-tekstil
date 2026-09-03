@@ -43,20 +43,24 @@ for (const file of files) {
       continue;
     }
 
-    if (ext === '.jpeg' || ext === '.jpg') {
+    // .webp / .jpg / .jpeg uzantılı görsellerin TÜMÜ (gerçek formatı JPEG
+    // veya WebP fark etmez) WebP'ye dönüştürülüp küçültülür.
+    if (ext === '.webp' || ext === '.jpeg' || ext === '.jpg') {
       const pipeline = sharp(inPath)
         .rotate()
         .resize({ width: MAX_DIM, height: MAX_DIM, fit: 'inside', withoutEnlargement: true });
 
-      const webpFile = file.replace(/\.jpe?g$/i, '.webp');
+      const webpFile = file.replace(/\.jpe?g$/i, '').replace(/\.webp$/i, '') + '.webp';
       const webpOut = join(outDir, webpFile);
-      const webpSrc = join(srcDir, webpFile);
-
-      if (existsSync(webpSrc)) continue;
-
       const webpBuffer = await pipeline.webp({ quality: WEBP_QUALITY }).toBuffer();
       writeFileSync(webpOut, webpBuffer);
-      writeFileSync(webpSrc, webpBuffer);
+
+      // Kaynak img/ klasöründeki büyük dosyayı da optimize haliyle değiştir
+      // (Github'a küçük dosya gitsin, kaynak kodu temiz kalsın).
+      if (webpFile !== file) {
+        rmSync(inPath, { force: true });
+      }
+      writeFileSync(inPath, webpBuffer);
 
       console.log(`WEBP     ${webpFile.padEnd(48)} ${fmtMB(inBytes)} → ${fmtMB(webpBuffer.length)}`);
       continue;
