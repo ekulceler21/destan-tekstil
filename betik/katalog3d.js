@@ -317,9 +317,9 @@ function projectTilePosition(tile) {
   };
 }
 
-function showTooltip(name, price, x, y) {
+function showTooltip(name, x, y) {
   if (!tooltipEl) return;
-  tooltipEl.innerHTML = `<span class="galeri-3d-tip-name">${name}</span><span class="galeri-3d-tip-price">${price ? price.toLocaleString('tr-TR', { style: 'currency', currency: 'TRY' }) : 'Destan Tekstil'}</span>`;
+  tooltipEl.innerHTML = `<span class="galeri-3d-tip-name">${name}</span>`;
   tooltipEl.classList.add('visible');
   if (typeof x === 'number' && typeof y === 'number') {
     tooltipEl.style.left = `${x}px`;
