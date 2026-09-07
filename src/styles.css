@@ -808,3 +808,75 @@ a.list__name:hover {
     fill: currentColor;
     flex-shrink: 0;
 }
+
+/* ── Mobil İletişim Barı ───────────────────────────────────────── */
+.contact-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2000;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  background: rgba(255, 246, 238, 0.96);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid var(--rule-b);
+  box-shadow: 0 -4px 24px rgba(138, 58, 11, 0.12);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.contact-bar__link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 10px 6px 12px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg);
+  text-decoration: none;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.contact-bar__link .icon {
+  width: 22px;
+  height: 22px;
+}
+
+.contact-bar__link:active {
+  background: rgba(249, 115, 22, 0.14);
+}
+
+.contact-bar__link--whatsapp {
+  color: #128c4a;
+}
+
+.contact-bar__link--phone {
+  color: var(--accent-b);
+}
+
+.contact-bar__link--mail {
+  color: var(--fg-dim);
+}
+
+/* Masaüstünde gizle, sadece mobilde göster */
+@media (min-width: 769px) {
+  .contact-bar {
+    display: none;
+  }
+}
+
+/* Mobilde içerik barın arkasında kalmaması için boşluk */
+@media (max-width: 768px) {
+  body {
+    padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+  }
+  .footer {
+    padding-bottom: calc(clamp(48px, 8vh, 80px) + 64px + env(safe-area-inset-bottom, 0px));
+  }
+}
