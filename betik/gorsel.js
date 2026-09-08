@@ -44,17 +44,25 @@ for (const file of files) {
     }
 
     // .webp / .jpg / .jpeg uzantılı görsellerin TÜMÜ (gerçek formatı JPEG
-    // veya WebP fark etmez) WebP'ye dönüştürülür.
+    // veya WebP fark etmez) WebP olarak çıktılanır.
     // NOT: Kalite dosya boyutundan önemlidir. Çözünürlük KÜÇÜLTÜLMEZ
     // (resize uygulanmaz) ve zarar verici sıkıştırma yapılmaz.
     if (ext === '.webp' || ext === '.jpeg' || ext === '.jpg') {
-      // Ana sayfa kategori banner'ları en yüksek kalitede korunur.
-      const yuksekKalite = BANNER_HI.includes(file);
-      const pipeline = sharp(inPath).rotate();
-
       const webpFile = file.replace(/\.jpe?g$/i, '').replace(/\.webp$/i, '') + '.webp';
       const webpOut = join(outDir, webpFile);
-      const webpBuffer = await pipeline
+
+      // Zaten WebP olan kaynaklar birebir (kayıpsız) kopyalanır. Yeniden
+      // sıkıştırma kalite kaybettirir; yalnızca JPEG→WebP dönüşümü uygulanır.
+      if (ext === '.webp') {
+        copyFileSync(inPath, webpOut);
+        console.log(`WEBP     ${webpFile.padEnd(48)} ${fmtMB(inBytes)} → ${fmtMB(statSync(webpOut).size)} [kayıpsız kopya]`);
+        continue;
+      }
+
+      // Ana sayfa kategori banner'ları en yüksek kalitede korunur.
+      const yuksekKalite = BANNER_HI.includes(file);
+      const webpBuffer = await sharp(inPath)
+        .rotate()
         .webp({ quality: yuksekKalite ? BANNER_QUALITY : WEBP_QUALITY })
         .toBuffer();
       writeFileSync(webpOut, webpBuffer);
