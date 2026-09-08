@@ -5,11 +5,11 @@ import sharp from 'sharp';
 const srcDir = join(process.cwd(), 'img');
 const outDir = join(process.cwd(), 'dist', 'img');
 
-const MAX_DIM = 1600;
-const WEBP_QUALITY = 75;
+const MAX_DIM = 1920;
+const WEBP_QUALITY = 88;
 const LOGO_MAX = 512;
 const BANNER_DIM = 2048;
-const BANNER_QUALITY = 88;
+const BANNER_QUALITY = 92;
 const BANNER_HI = ['001.webp', '002.webp', '003.webp', '004.webp'];
 
 function fmtMB(bytes) {
