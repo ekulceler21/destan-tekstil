@@ -5,11 +5,8 @@ import sharp from 'sharp';
 const srcDir = join(process.cwd(), 'img');
 const outDir = join(process.cwd(), 'dist', 'img');
 
-const MAX_DIM = 1920;
-const WEBP_QUALITY = 88;
-const LOGO_MAX = 512;
-const BANNER_DIM = 2048;
-const BANNER_QUALITY = 92;
+const WEBP_QUALITY = 93;
+const BANNER_QUALITY = 95;
 const BANNER_HI = ['001.webp', '002.webp', '003.webp', '004.webp'];
 
 function fmtMB(bytes) {
@@ -38,8 +35,8 @@ for (const file of files) {
     }
 
     if (file === 'Destan_Tekstil_Logo_Transparan.png') {
+      // Logo kayıpsız (lossless) PNG olarak korunur — boyut değiştirilmez.
       await sharp(inPath)
-        .resize({ width: LOGO_MAX, height: LOGO_MAX, fit: 'inside', withoutEnlargement: true })
         .png({ compressionLevel: 9 })
         .toFile(outPath);
       console.log(`LOGO     ${file.padEnd(48)} ${fmtMB(inBytes)} → ${fmtMB(statSync(outPath).size)}`);
@@ -47,19 +44,13 @@ for (const file of files) {
     }
 
     // .webp / .jpg / .jpeg uzantılı görsellerin TÜMÜ (gerçek formatı JPEG
-    // veya WebP fark etmez) WebP'ye dönüştürülüp küçültülür.
+    // veya WebP fark etmez) WebP'ye dönüştürülür.
+    // NOT: Kalite dosya boyutundan önemlidir. Çözünürlük KÜÇÜLTÜLMEZ
+    // (resize uygulanmaz) ve zarar verici sıkıştırma yapılmaz.
     if (ext === '.webp' || ext === '.jpeg' || ext === '.jpg') {
-      // Ana sayfa kategori banner'ları mobilde de net görünsün diye
-      // daha yüksek kalitede ve yüksek çözünürlükte sıkıştırılır.
+      // Ana sayfa kategori banner'ları en yüksek kalitede korunur.
       const yuksekKalite = BANNER_HI.includes(file);
-      const pipeline = sharp(inPath)
-        .rotate()
-        .resize({
-          width: yuksekKalite ? BANNER_DIM : MAX_DIM,
-          height: yuksekKalite ? BANNER_DIM : MAX_DIM,
-          fit: 'inside',
-          withoutEnlargement: true,
-        });
+      const pipeline = sharp(inPath).rotate();
 
       const webpFile = file.replace(/\.jpe?g$/i, '').replace(/\.webp$/i, '') + '.webp';
       const webpOut = join(outDir, webpFile);
@@ -68,8 +59,8 @@ for (const file of files) {
         .toBuffer();
       writeFileSync(webpOut, webpBuffer);
 
-      // Kaynak img/ klasöründeki büyük dosyayı da optimize haliyle değiştir
-      // (Github'a küçük dosya gitsin, kaynak kodu temiz kalsın).
+      // Kaynak img/ klasöründeki dosyayı da aynı yüksek kalitede bırak
+      // (Github'a kaliteli kaynak gitsin, derleme ondan üretilsin).
       if (webpFile !== file) {
         rmSync(inPath, { force: true });
       }
