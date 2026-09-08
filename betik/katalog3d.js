@@ -78,7 +78,7 @@ const _world = new THREE.Vector3();
 const _proj = new THREE.Vector3();
 
 function createFallbackTexture() {
-  const data = new Uint8Array([255, 124, 26, 255]);
+  const data = new Uint8Array([0, 0, 0, 0]);
   const texture = new THREE.DataTexture(data, 1, 1);
   texture.colorSpace = THREE.SRGBColorSpace;
   texture.needsUpdate = true;
