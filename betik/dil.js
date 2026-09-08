@@ -66,7 +66,7 @@
       'i.imza': 'Logolu havlu, penuar ve çalışma kıyafetlerinde dayanıklılık ve şıklık.',
 
       'i.labelKategoriler': 'Kategoriler',
-      'i.tDort': 'Salonunuzun ihtiyaç duyduğu dört ana grup.',
+      'i.tDort': 'SALONUNUZA UYGUN KOLEKSİYONU KEŞFEDİN.',
       'kat1.ad': 'Askılı önlükler',
       'kat1.meta': 'Önlük',
       'kat2.ad': 'Penuarlar',
@@ -189,7 +189,7 @@
       'i.imza': 'Durability and elegance in logo towels, capes and workwear.',
 
       'i.labelKategoriler': 'Categories',
-      'i.tDort': 'The four core groups your salon needs.',
+      'i.tDort': 'DISCOVER THE PERFECT COLLECTION FOR YOUR SALON.',
       'kat1.ad': 'Strap aprons',
       'kat1.meta': 'Apron',
       'kat2.ad': 'Capes',
@@ -312,7 +312,7 @@
       'i.imza': 'Langlebigkeit und Eleganz bei Handtüchern mit Logo, Capes und Arbeitskleidung.',
 
       'i.labelKategoriler': 'Kategorien',
-      'i.tDort': 'Die vier Kerngruppen, die Ihr Salon braucht.',
+      'i.tDort': 'ENTDECKEN SIE DIE PASSENDE KOLLEKTION FÜR IHREN SALON.',
       'kat1.ad': 'Bindenschürzen',
       'kat1.meta': 'Schürze',
       'kat2.ad': 'Capes',
@@ -435,7 +435,7 @@
       'i.imza': 'متانة وأناقة في المناشف ذات الشعار والأردية وملابس العمل.',
 
       'i.labelKategoriler': 'الفئات',
-      'i.tDort': 'المجموعات الأربع الأساسية التي يحتاجها صالونك.',
+      'i.tDort': 'اكتشف المجموعة المناسبة لصالونك.',
       'kat1.ad': 'مآزر بأشرطة',
       'kat1.meta': 'مريلة',
       'kat2.ad': 'أردية',
