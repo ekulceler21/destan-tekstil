@@ -8,6 +8,9 @@ const outDir = join(process.cwd(), 'dist', 'img');
 const MAX_DIM = 1600;
 const WEBP_QUALITY = 75;
 const LOGO_MAX = 512;
+const BANNER_DIM = 2048;
+const BANNER_QUALITY = 88;
+const BANNER_HI = ['001.webp', '002.webp', '003.webp', '004.webp'];
 
 function fmtMB(bytes) {
   return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
@@ -46,13 +49,23 @@ for (const file of files) {
     // .webp / .jpg / .jpeg uzantılı görsellerin TÜMÜ (gerçek formatı JPEG
     // veya WebP fark etmez) WebP'ye dönüştürülüp küçültülür.
     if (ext === '.webp' || ext === '.jpeg' || ext === '.jpg') {
+      // Ana sayfa kategori banner'ları mobilde de net görünsün diye
+      // daha yüksek kalitede ve yüksek çözünürlükte sıkıştırılır.
+      const yuksekKalite = BANNER_HI.includes(file);
       const pipeline = sharp(inPath)
         .rotate()
-        .resize({ width: MAX_DIM, height: MAX_DIM, fit: 'inside', withoutEnlargement: true });
+        .resize({
+          width: yuksekKalite ? BANNER_DIM : MAX_DIM,
+          height: yuksekKalite ? BANNER_DIM : MAX_DIM,
+          fit: 'inside',
+          withoutEnlargement: true,
+        });
 
       const webpFile = file.replace(/\.jpe?g$/i, '').replace(/\.webp$/i, '') + '.webp';
       const webpOut = join(outDir, webpFile);
-      const webpBuffer = await pipeline.webp({ quality: WEBP_QUALITY }).toBuffer();
+      const webpBuffer = await pipeline
+        .webp({ quality: yuksekKalite ? BANNER_QUALITY : WEBP_QUALITY })
+        .toBuffer();
       writeFileSync(webpOut, webpBuffer);
 
       // Kaynak img/ klasöründeki büyük dosyayı da optimize haliyle değiştir
@@ -62,7 +75,7 @@ for (const file of files) {
       }
       writeFileSync(inPath, webpBuffer);
 
-      console.log(`WEBP     ${webpFile.padEnd(48)} ${fmtMB(inBytes)} → ${fmtMB(webpBuffer.length)}`);
+      console.log(`WEBP     ${webpFile.padEnd(48)} ${fmtMB(inBytes)} → ${fmtMB(webpBuffer.length)}${yuksekKalite ? ' [YÜKSEK KALİTE]' : ''}`);
       continue;
     }
 
