@@ -1,5 +1,25 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    // --- Çeviri yardımcıları ---
+    function D() {
+        return window.DIL || { suanki: function () { return 'tr'; }, cevir: function (k) { return k; }, renk: function (r) { return r; }, urun: function (id) { return null; }, kategori: function (k) { return k; }, baslik: function (k) { return k; } };
+    }
+
+    function yerelBp(bp) {
+        const u = D().urun(bp.id);
+        return u ? { ...bp, name: u.name, description: u.description } : bp;
+    }
+
+    function yerelRenk(renk) {
+        return D().renk(renk);
+    }
+
+    function bagla(el, olay, fn) {
+        if (!el || el.dataset.bagli) return;
+        el.dataset.bagli = '1';
+        el.addEventListener(olay, fn);
+    }
+
     // --- Ürün verileri (gerçek ürün görselleriyle) ---
     const baseProducts = [
         {
@@ -207,18 +227,25 @@ document.addEventListener('DOMContentLoaded', () => {
     window.MARKA_PRODUCTS = products;
     window.MARKA_PRODUCTS_READY = true;
 
-    // --- Kategori adları ---
-    const kategoriAdlari = {
-        'tumu': 'Tüm Kataloğumuz',
-        'onluk': 'Profesyonel Salon Önlükleri',
-        'penuar': 'Penuarlar',
-        'havlu': 'Salon Tekstili & Havlu',
-        'giyim': 'İş Kıyafetleri & Giyim'
-    };
+    // --- Ürün adı/açıklamasını seçili dile göre canlı günceller ---
+    function dilKartlariGuncelle() {
+        products.forEach(p => {
+            const bp = baseProducts.find(b => b.id === p.grupId);
+            if (!bp) return;
+            const la = yerelBp(bp);
+            p.name = p.renk ? `${la.name} (${yerelRenk(p.renk)})` : la.name;
+            p.description = la.description;
+        });
+    }
+    dilKartlariGuncelle();
 
     // --- Yardımcı Fonksiyonlar ---
+    function fiyatYereli() {
+        const d = D().suanki();
+        return { tr: 'tr-TR', en: 'en-US', de: 'de-DE', ar: 'ar-SA' }[d] || 'tr-TR';
+    }
     function formatPrice(price) {
-        return price.toLocaleString('tr-TR', { style: 'currency', currency: 'TRY' });
+        return price.toLocaleString(fiyatYereli(), { style: 'currency', currency: 'TRY' });
     }
 
     function colorHex(color) {
@@ -285,6 +312,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             cart.push({
                 id: product.id,
+                grupId: product.grupId,
                 name: product.name,
                 price: product.price,
                 image: product.images[0] || '',
@@ -294,16 +322,16 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
         saveCart();
-        showCartToast(`${quantity}x "${product.name}" sepete eklendi`);
+        showCartToast(D().cevir('u.sepetEklendi').replace('{n}', quantity).replace('{u}', product.name));
     }
 
     // --- Ürün Render Etme ---
     function renderProductCard(product) {
         const imageHtml = (product.images && product.images.length > 0)
             ? `<img src="${product.images[0]}" alt="${product.name}" class="product-image" loading="lazy" decoding="async" onerror="gorselWebpYedek(this)">`
-            : `<div class="product-image product-image-placeholder"><svg class="icon" aria-hidden="true"><use href="#icon-tshirt"></use></svg><span>Ürün Görseli</span></div>`;
+            : `<div class="product-image product-image-placeholder"><svg class="icon" aria-hidden="true"><use href="#icon-tshirt"></use></svg><span>${D().cevir('k.gorsel')}</span></div>`;
         const colorInfo = product.renk
-            ? `<p class="product-colors">Renk: <span class="color-swatch" style="background-color:${colorHex(product.renk)}"></span>${product.renk}</p>`
+            ? `<p class="product-colors">${D().cevir('u.renkKisa')}: <span class="color-swatch" style="background-color:${colorHex(product.renk)}"></span>${yerelRenk(product.renk)}</p>`
             : '';
         return `
             <div class="product-card">
@@ -313,7 +341,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="product-info">
                         <h3 class="product-title">${product.name}</h3>
                         ${colorInfo}
-                        <button class="btn add-to-cart-quick" data-product-id="${product.id}">Detayları Gör</button>
+                        <button class="btn add-to-cart-quick" data-product-id="${product.id}">${D().cevir('k.detay')}</button>
                     </div>
                 </a>
             </div>
@@ -327,11 +355,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const kategori = params.get('kategori');
             const baslikEl = document.getElementById('katalog-baslik');
             let filtered = products;
-            if (kategori && kategoriAdlari[kategori] && kategori !== 'tumu') {
+            if (kategori && kategori !== 'tumu') {
                 filtered = products.filter(p => p.category === kategori);
-                if (baslikEl) baslikEl.textContent = kategoriAdlari[kategori];
+                if (baslikEl) baslikEl.textContent = D().baslik(kategori);
             } else {
-                if (baslikEl) baslikEl.textContent = 'Tüm Kataloğumuz';
+                if (baslikEl) baslikEl.textContent = D().baslik('tumu');
             }
             document.querySelectorAll('.kategori-btn').forEach(btn => {
                 btn.classList.toggle('aktif', btn.dataset.kategori === (kategori || 'tumu'));
@@ -399,7 +427,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const thumbnailContainer = document.getElementById('thumbnail-container');
         if (thumbnailContainer) {
             thumbnailContainer.innerHTML = product.images.map(imgSrc => `
-                <img src="${imgSrc}" alt="Ürün Küçük Görsel" class="thumbnail" data-full-image="${imgSrc}" loading="lazy" decoding="async" onerror="gorselWebpYedek(this)">
+                <img src="${imgSrc}" alt="${D().cevir('u.kucukGorsel')}" class="thumbnail" data-full-image="${imgSrc}" loading="lazy" decoding="async" onerror="gorselWebpYedek(this)">
             `).join('');
             thumbnailContainer.querySelectorAll('.thumbnail').forEach(thumbnail => {
                 thumbnail.addEventListener('click', () => {
@@ -436,7 +464,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (colorSelector) colorSelector.style.display = 'block';
                 colorOptionsContainer.innerHTML = siblings.map(sib => `
                     <a href="urun.html?id=${sib.id}" class="color-option ${sib.id === product.id ? 'selected' : ''}" data-color="${sib.renk}">
-                        <span class="color-swatch" style="background-color:${colorHex(sib.renk)}"></span>${sib.renk}
+                        <span class="color-swatch" style="background-color:${colorHex(sib.renk)}"></span>${yerelRenk(sib.renk)}
                     </a>
                 `).join('');
                 selectedColor = product.renk;
@@ -453,32 +481,33 @@ document.addEventListener('DOMContentLoaded', () => {
             quantityInput.value = val;
             return val;
         };
-        document.getElementById('decrease-quantity')?.addEventListener('click', () => {
+        bagla(document.getElementById('decrease-quantity'), 'click', () => {
             let currentQuantity = sanitizeQuantity();
             if (currentQuantity > 1) {
                 quantityInput.value = currentQuantity - 1;
             }
         });
-        document.getElementById('increase-quantity')?.addEventListener('click', () => {
+        bagla(document.getElementById('increase-quantity'), 'click', () => {
             let currentQuantity = sanitizeQuantity();
             quantityInput.value = currentQuantity + 1;
         });
-        quantityInput.addEventListener('change', sanitizeQuantity);
+        bagla(quantityInput, 'change', sanitizeQuantity);
 
-        document.getElementById('add-to-cart-btn')?.addEventListener('click', () => {
+        bagla(document.getElementById('add-to-cart-btn'), 'click', () => {
             if (!selectedSize) {
-                alert('Lütfen bir beden seçin!');
+                alert(D().cevir('u.bedenUyari'));
                 return;
             }
             if (!selectedColor) {
-                alert('Lütfen bir renk seçin!');
+                alert(D().cevir('u.renkUyari'));
                 return;
             }
             const quantity = sanitizeQuantity();
             addToCart(productId, selectedSize, selectedColor, quantity);
             const messageEl = document.getElementById('add-to-cart-message');
             if (messageEl) {
-                messageEl.textContent = `${quantity}x "${product.name}" (Beden: ${selectedSize}, Renk: ${selectedColor}) sepete eklendi!`;
+                const urunEtiketi = `${product.name} (${D().cevir('u.bedenKisa')}: ${selectedSize}, ${D().cevir('u.renkKisa')}: ${yerelRenk(selectedColor)})`;
+                messageEl.textContent = D().cevir('u.sepetEklendi').replace('{n}', quantity).replace('{u}', urunEtiketi);
                 messageEl.style.display = 'block';
                 setTimeout(() => {
                     messageEl.style.display = 'none';
@@ -492,14 +521,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const closeZoom = document.getElementById('close-zoom');
 
         if (mainImage && zoomOverlay && zoomedImage && closeZoom) {
-            mainImage.addEventListener('click', () => {
+            bagla(mainImage, 'click', () => {
                 zoomedImage.src = mainImage.src;
                 zoomOverlay.classList.add('active');
             });
-            closeZoom.addEventListener('click', () => {
+            bagla(closeZoom, 'click', () => {
                 zoomOverlay.classList.remove('active');
             });
-            zoomOverlay.addEventListener('click', (e) => {
+            bagla(zoomOverlay, 'click', (e) => {
                 if (e.target === zoomOverlay) {
                     zoomOverlay.classList.remove('active');
                 }
@@ -583,13 +612,22 @@ document.addEventListener('DOMContentLoaded', () => {
     } else if (currentPage === 'urun.html') {
         renderProductPage();
     }
+
+    // --- Dil değişince ürün kartlarını/detayını yeniden render eder ---
+    window.DIL_DEGISTI_ISLEMLER = window.DIL_DEGISTI_ISLEMLER || [];
+    window.DIL_DEGISTI_ISLEMLER.push(function () {
+        dilKartlariGuncelle();
+        const sayfa = window.location.pathname.split('/').pop();
+        if (sayfa === 'katalog.html') renderAllProducts();
+        else if (sayfa === 'urun.html') renderProductPage();
+    });
 });
 
 // --- Görsel Bulunamazsa Yedek Görsel (kart) ---
 function gorselYok(el) {
     const placeholder = document.createElement('div');
     placeholder.className = 'product-image product-image-placeholder';
-    placeholder.innerHTML = '<svg class="icon" aria-hidden="true"><use href="#icon-tshirt"></use></svg><span>Ürün Görseli</span>';
+    placeholder.innerHTML = '<svg class="icon" aria-hidden="true"><use href="#icon-tshirt"></use></svg><span>' + (window.DIL ? window.DIL.cevir('k.gorsel') : 'Ürün Görseli') + '</span>';
     if (el && el.parentNode) {
         el.replaceWith(placeholder);
     }
@@ -619,7 +657,7 @@ function gorselYokAna(el) {
     if (ph) {
         ph.style.display = 'flex';
         const span = ph.querySelector('span');
-        if (span) span.textContent = 'Ürün Görseli';
+        if (span) span.textContent = window.DIL ? window.DIL.cevir('k.gorsel') : 'Ürün Görseli';
     }
 }
 

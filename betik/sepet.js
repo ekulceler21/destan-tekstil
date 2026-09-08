@@ -17,6 +17,20 @@
     };
 
     // --- 2. Yardımcı ve Veri Yönetimi Fonksiyonları ---
+    function D() {
+        return window.DIL || { cevir: function (k) { return k; }, renk: function (r) { return r; }, urun: function () { return null; } };
+    }
+
+    function yerelAd(item) {
+        const u = item.grupId ? D().urun(item.grupId) : null;
+        return u ? u.name : (item.name || '');
+    }
+
+    function yerelRenk(item) {
+        if (!item.color) return '';
+        return D().renk(item.color);
+    }
+
     function getCartItems() {
         try {
             const cart = localStorage.getItem('cart');
@@ -65,20 +79,20 @@
                 const cartItemDiv = document.createElement('div');
                 cartItemDiv.classList.add('cart-item');
                 cartItemDiv.dataset.itemKey = getItemKey(item);
-                const sizeText = item.size ? `Beden: ${item.size}` : '';
-                const colorText = item.color ? `Renk: ${item.color}` : '';
+                const sizeText = item.size ? `${D().cevir('s.beden')}${item.size}` : '';
+                const colorText = yerelRenk(item) ? `${D().cevir('s.renk')}${yerelRenk(item)}` : '';
                 const imageHtml = item.image
-                    ? `<img src="${item.image}" alt="${item.name}" class="cart-item-image" onerror="gorselWebpYedekSepet(this)">`
+                    ? `<img src="${item.image}" alt="${yerelAd(item)}" class="cart-item-image" onerror="gorselWebpYedekSepet(this)">`
                     : `<div class="cart-item-image cart-image-placeholder"><svg class="icon" aria-hidden="true"><use href="#icon-tshirt"></use></svg></div>`;
                 cartItemDiv.innerHTML = `
                     ${imageHtml}
                     <div class="item-details">
-                        <h3>${item.name}</h3>
+                        <h3>${yerelAd(item)}</h3>
                         ${sizeText ? `<p>${sizeText}</p>` : ''}
                         ${colorText ? `<p>${colorText}</p>` : ''}
                         <div class="quantity-controls">
                             <button class="decrease-quantity-btn" data-item-key="${getItemKey(item)}">-</button>
-                            <input type="number" class="item-quantity" value="${item.quantity}" min="1" data-item-key="${getItemKey(item)}" aria-label="Adet">
+                            <input type="number" class="item-quantity" value="${item.quantity}" min="1" data-item-key="${getItemKey(item)}" aria-label="${D().cevir('u.adet')}">
                             <button class="increase-quantity-btn" data-item-key="${getItemKey(item)}">+</button>
                         </div>
                         <button class="remove-item-btn" data-item-key="${getItemKey(item)}"><svg class="icon" aria-hidden="true"><use href="#icon-trash"></use></svg></button>
@@ -135,7 +149,7 @@
         } else if (button.classList.contains('decrease-quantity-btn')) {
             updateQuantity(itemKey, -1);
         } else if (button.classList.contains('remove-item-btn')) {
-            if (confirm('Bu ürünü sepetten kaldırmak istediğinize emin misiniz?')) {
+            if (confirm(D().cevir('s.silOnay'))) {
                 removeFromCart(itemKey);
             }
         }
@@ -150,24 +164,25 @@
     }
 
     function handleCheckoutWhatsapp() {
+        const d = D();
         const cart = getCartItems();
         if (cart.length === 0) {
-            alert('Sepetiniz boş. Siparişi tamamlamadan önce ürün ekleyin.');
+            alert(d.cevir('s.siparisBos'));
             return;
         }
         if (!CONFIG.whatsappPhoneNumber) {
-            alert('Şu anda WhatsApp siparişi alınamıyor. Telefon numarası henüz tanımlanmadı.');
+            alert(d.cevir('s.siparisYok'));
             return;
         }
-        let whatsappMessage = `Merhaba! Destan Tekstil'den sipariş vermek istiyorum.\n\n`;
-        whatsappMessage += `--- Ürünlerim ---\n`;
+        let whatsappMessage = `${d.cevir('s.wIntro')}\n\n`;
+        whatsappMessage += `${d.cevir('s.wUrunler')}\n`;
         cart.forEach((item, index) => {
-            const sizeText = item.size ? `, Beden: ${item.size}` : '';
-            const colorText = item.color ? `, Renk: ${item.color}` : '';
-            whatsappMessage += `${index + 1}. ${item.name}${sizeText}${colorText} (x${item.quantity})\n`;
+            const sizeText = item.size ? `, ${d.cevir('s.beden')}${item.size}` : '';
+            const colorText = yerelRenk(item) ? `, ${d.cevir('s.renk')}${yerelRenk(item)}` : '';
+            whatsappMessage += `${index + 1}. ${yerelAd(item)}${sizeText}${colorText} (x${item.quantity})\n`;
         });
-        whatsappMessage += `-------------------\n`;
-        whatsappMessage += `Lütfen bana fiyat teklifi iletir misiniz?`;
+        whatsappMessage += `${d.cevir('s.wAyirici')}\n`;
+        whatsappMessage += d.cevir('s.wTeklif');
         const encodedMessage = encodeURIComponent(whatsappMessage);
         const whatsappLink = `https://wa.me/${CONFIG.whatsappPhoneNumber}?text=${encodedMessage}`;
         window.open(whatsappLink, '_blank');
@@ -188,6 +203,10 @@
         if (DOM.checkoutWhatsappBtn) {
             DOM.checkoutWhatsappBtn.addEventListener('click', handleCheckoutWhatsapp);
         }
+        window.DIL_DEGISTI_ISLEMLER = window.DIL_DEGISTI_ISLEMLER || [];
+        window.DIL_DEGISTI_ISLEMLER.push(function () {
+            renderCart();
+        });
     }
 
     document.addEventListener('DOMContentLoaded', initializeCart);

@@ -435,7 +435,7 @@ function renderStaticGrid(items, mount) {
       const imageHtml =
         product.images && product.images.length > 0
           ? `<img src="${product.images[0]}" alt="${product.name}" class="product-image" loading="lazy" decoding="async" onerror="gorselWebpYedek(this)">`
-          : `<div class="product-image product-image-placeholder"><svg class="icon" aria-hidden="true"><use href="#icon-tshirt"></use></svg><span>Ürün Görseli</span></div>`;
+          : `<div class="product-image product-image-placeholder"><svg class="icon" aria-hidden="true"><use href="#icon-tshirt"></use></svg><span>${window.DIL ? window.DIL.cevir('k.gorsel') : 'Ürün Görseli'}</span></div>`;
       return `
         <div class="product-card">
           <a href="urun.html?id=${encodeURIComponent(product.id)}">
@@ -450,6 +450,8 @@ function renderStaticGrid(items, mount) {
     .join('');
 
   const aktifKategori = new URLSearchParams(window.location.search).get('kategori') || 'tumu';
+  const d = window.DIL;
+  const etiket = (k) => d ? d.kategori(k) : k;
   const kategoriFiltre = document.createElement('div');
   kategoriFiltre.className = 'kategori-filtre';
   kategoriFiltre.style.position = 'relative';
@@ -457,11 +459,11 @@ function renderStaticGrid(items, mount) {
   kategoriFiltre.style.margin = 'clamp(32px, 5vh, 56px) 0 1.5rem';
   kategoriFiltre.style.padding = '0 var(--gutter, 20px)';
   kategoriFiltre.innerHTML = [
-    ['tumu', 'Tümü'],
-    ['onluk', 'Önlükler'],
-    ['penuar', 'Penuarlar'],
-    ['havlu', 'Havlular'],
-    ['giyim', 'Giyim'],
+    ['tumu', etiket('tumu')],
+    ['onluk', etiket('onluk')],
+    ['penuar', etiket('penuar')],
+    ['havlu', etiket('havlu')],
+    ['giyim', etiket('giyim')],
   ]
     .map(
       ([kategori, label]) =>
@@ -600,3 +602,16 @@ if (document.readyState === 'loading') {
 } else {
   scheduleIdle(init);
 }
+
+window.DIL_DEGISTI_ISLEMLER = window.DIL_DEGISTI_ISLEMLER || [];
+window.DIL_DEGISTI_ISLEMLER.push(function () {
+  const mount = document.getElementById('galeri-3d-scene');
+  if (mount) {
+    const products = window.MARKA_PRODUCTS;
+    if (products && document.getElementById('galeri-3d') && prefersStaticGrid()) {
+      renderStaticGrid(staticGridItems(products), mount);
+      return;
+    }
+    scheduleIdle(init);
+  }
+});

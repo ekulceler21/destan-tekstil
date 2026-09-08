@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "postbuild": "node betik/gorsel.js && mkdir -p dist/font dist/stil dist/betik && cp -R font/. dist/font/ && cp stil/fonts.css stil/landing.css dist/stil/ && cp betik/ayarlar.js betik/site.js betik/sepet.js dist/betik/ && cp robots.txt sitemap.xml dist/",
+    "postbuild": "node betik/gorsel.js && mkdir -p dist/font dist/stil dist/betik && cp -R font/. dist/font/ && cp stil/fonts.css stil/landing.css dist/stil/ && cp betik/ayarlar.js betik/dil.js betik/iletisim.js betik/site.js betik/sepet.js dist/betik/ && cp robots.txt sitemap.xml dist/",
     "preview": "vite preview"
   },
   "dependencies": {
