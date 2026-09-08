@@ -605,17 +605,9 @@ header {
   padding: clamp(16px, 2vw, 28px) clamp(12px, 2vw, 28px);
 }
 
-.list__index,
 .list__name,
 .list__meta {
   text-shadow: 0 1px 14px rgba(255, 246, 238, 0.85);
-}
-
-.list__index {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.2em;
-  color: var(--accent-b);
 }
 
 .list__name {
