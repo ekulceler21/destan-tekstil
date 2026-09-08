@@ -59,12 +59,8 @@ for (const file of files) {
         .toBuffer();
       writeFileSync(webpOut, webpBuffer);
 
-      // Kaynak img/ klasöründeki dosyayı da aynı yüksek kalitede bırak
-      // (Github'a kaliteli kaynak gitsin, derleme ondan üretilsin).
-      if (webpFile !== file) {
-        rmSync(inPath, { force: true });
-      }
-      writeFileSync(inPath, webpBuffer);
+      // Kaynak img/ klasörüne ASLA YAZILMAZ: orijinal görseller bozulmadan
+      // korunur. Sıkıştırma yalnızca dist/img çıktısına uygulanır.
 
       console.log(`WEBP     ${webpFile.padEnd(48)} ${fmtMB(inBytes)} → ${fmtMB(webpBuffer.length)}${yuksekKalite ? ' [YÜKSEK KALİTE]' : ''}`);
       continue;
