@@ -93,8 +93,8 @@
       'i.tSorular': 'Sorularınız için bize ulaşın.',
       'i.adresAd': 'Adres',
       'i.adres1': 'Bahar Özkan',
-      'i.adres2': 'Dokuzkavaklar Mah. 2061 Sokak',
-      'i.adres3': 'Pamukkale / Denizli, Türkiye',
+      'i.adres2': 'Sümer Mah. 2291/3 Sokak No:15A',
+      'i.adres3': 'Merkezefendi / Denizli, Türkiye',
       'i.telefonLabel': 'Telefon',
       'i.baglantilar': 'Bağlantılar',
 
@@ -216,8 +216,8 @@
       'i.tSorular': 'Get in touch with your questions.',
       'i.adresAd': 'Address',
       'i.adres1': 'Bahar Özkan',
-      'i.adres2': 'Dokuzkavaklar District, 2061 Street',
-      'i.adres3': 'Pamukkale / Denizli, Türkiye',
+      'i.adres2': 'Sümer District, 2291/3 Street No:15A',
+      'i.adres3': 'Merkezefendi / Denizli, Türkiye',
       'i.telefonLabel': 'Phone',
       'i.baglantilar': 'Links',
 
@@ -339,8 +339,8 @@
       'i.tSorular': 'Kontaktieren Sie uns bei Fragen.',
       'i.adresAd': 'Adresse',
       'i.adres1': 'Bahar Özkan',
-      'i.adres2': 'Dokuzkavaklar Viertel, Straße 2061',
-      'i.adres3': 'Pamukkale / Denizli, Türkiye',
+      'i.adres2': 'Sümer Viertel, Straße 2291/3 Nr.15A',
+      'i.adres3': 'Merkezefendi / Denizli, Türkei',
       'i.telefonLabel': 'Telefon',
       'i.baglantilar': 'Links',
 
@@ -462,8 +462,8 @@
       'i.tSorular': 'تواصل معنا لاستفساراتك.',
       'i.adresAd': 'العنوان',
       'i.adres1': 'بهار أوزكان',
-      'i.adres2': 'حي دوکوزکافاکلار، شارع 2061',
-      'i.adres3': 'باموق قلعة / دنيزلي، تركيا',
+      'i.adres2': 'حي سومر، شارع 2291/3 رقم 15أ',
+      'i.adres3': 'مركز إفندي / دنيزلي، تركيا',
       'i.telefonLabel': 'الهاتف',
       'i.baglantilar': 'روابط',
 
