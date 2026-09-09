@@ -557,7 +557,7 @@ header {
   gap: clamp(14px, 2vw, 22px);
   padding: clamp(16px, 2vw, 22px) clamp(16px, 2vw, 24px);
   width: 850px;
-  height: 315px;
+  height: 260px;
   overflow: hidden;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
