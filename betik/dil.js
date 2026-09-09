@@ -67,7 +67,7 @@
       'i.imza': 'Logolu havlu, penuar ve çalışma kıyafetlerinde dayanıklılık ve şıklık.',
 
       'i.labelKategoriler': 'Kategoriler',
-      'i.tDort': 'SALONUNUZA UYGUN KOLEKSİYONU KEŞFEDİN.',
+      'i.tDort': 'SALONUNUZA UYGUN <span class="hero__accent">KOLEKSİYONU</span> KEŞFEDİN.',
       'kat1.ad': 'Askılı önlükler',
       'kat1.meta': 'Önlük',
       'kat1.b': 'Kuaför ve berberler için pratik ve profesyonel askılı önlükler.',
@@ -196,7 +196,7 @@
       'i.imza': 'Durability and elegance in logo towels, capes and workwear.',
 
       'i.labelKategoriler': 'Categories',
-      'i.tDort': 'DISCOVER THE PERFECT COLLECTION FOR YOUR SALON.',
+      'i.tDort': 'DISCOVER THE PERFECT <span class="hero__accent">COLLECTION</span> FOR YOUR SALON.',
       'kat1.ad': 'Strap aprons',
       'kat1.meta': 'Apron',
       'kat1.b': 'Practical, professional strap aprons for salons and barbers.',
@@ -325,7 +325,7 @@
       'i.imza': 'Langlebigkeit und Eleganz bei Handtüchern mit Logo, Capes und Arbeitskleidung.',
 
       'i.labelKategoriler': 'Kategorien',
-      'i.tDort': 'ENTDECKEN SIE DIE PASSENDE KOLLEKTION FÜR IHREN SALON.',
+      'i.tDort': 'ENTDECKEN SIE DIE PASSENDE <span class="hero__accent">KOLLEKTION</span> FÜR IHREN SALON.',
       'kat1.ad': 'Bindenschürzen',
       'kat1.meta': 'Schürze',
       'kat1.b': 'Praktische, professionelle Bindenschürzen für Friseure.',
@@ -454,7 +454,7 @@
       'i.imza': 'متانة وأناقة في المناشف ذات الشعار والأردية وملابس العمل.',
 
       'i.labelKategoriler': 'الفئات',
-      'i.tDort': 'اكتشف المجموعة المناسبة لصالونك.',
+      'i.tDort': 'اكتشف <span class="hero__accent">المجموعة</span> المناسبة لصالونك.',
       'kat1.ad': 'مآزر بأشرطة',
       'kat1.meta': 'مريلة',
       'kat1.b': 'مآزر عملية واحترافية لمصففي الشعر والحلاقين.',
@@ -666,7 +666,12 @@
     document.querySelectorAll('[data-i18n]').forEach(function (el) {
       var anahtar = el.getAttribute('data-i18n');
       var metin = cevir(anahtar);
-      if (metin) el.textContent = metin;
+      if (!metin) return;
+      if (metin.indexOf('<span') !== -1) {
+        el.innerHTML = metin;
+      } else {
+        el.textContent = metin;
+      }
     });
 
     document.querySelectorAll('[data-i18n-attr]').forEach(function (el) {

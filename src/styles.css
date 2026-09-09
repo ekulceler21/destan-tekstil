@@ -397,6 +397,11 @@ header {
   display: block;
 }
 
+.hero__accent {
+  color: var(--accent);
+  text-shadow: 0 0 24px rgba(245, 130, 32, 0.35);
+}
+
 .hero__line--italic {
   font-family: var(--font-body);
   font-style: italic;
