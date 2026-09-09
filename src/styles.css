@@ -391,6 +391,10 @@ header {
   text-transform: uppercase;
   max-width: 24ch;
   color: var(--fg);
+  text-shadow:
+    0 0 10px rgba(255, 255, 255, 0.4),
+    0 0 26px rgba(255, 255, 255, 0.45),
+    0 4px 18px rgba(231, 231, 231, 0.6);
 }
 
 .hero__line {
