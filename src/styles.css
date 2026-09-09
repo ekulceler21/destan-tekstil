@@ -683,14 +683,9 @@ header {
   font-family: var(--font-mono);
   font-size: 18px;
   line-height: 1;
-  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.list__row.acik .list__arrow {
-  transform: rotate(90deg);
-}
-
-/* Kart açık içerik alanı (#F4F4F4) */
+/* Kart açık içerik alanı (#F4F4F4) — devre dışı */
 .list__detail {
   display: none;
   flex-basis: 100%;
@@ -700,16 +695,6 @@ header {
   margin-top: clamp(6px, 1vw, 10px);
   padding: clamp(14px, 2vw, 18px);
   border-top: 1px solid var(--rule);
-}
-
-.list__row.acik .list__detail {
-  display: block;
-  animation: listOpen 0.3s ease;
-}
-
-@keyframes listOpen {
-  from { opacity: 0; transform: translateY(-4px); }
-  to { opacity: 1; transform: none; }
 }
 
 .list__body {
