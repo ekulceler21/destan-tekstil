@@ -399,6 +399,21 @@ function initSiteNav() {
 
 initSiteNav();
 
+function initCategoryCards() {
+  document.querySelectorAll('.list__row').forEach((row) => {
+    const action = row.querySelector('.list__action');
+    if (!action) return;
+    action.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      const open = row.classList.toggle('acik');
+      action.setAttribute('aria-expanded', String(open));
+    });
+  });
+}
+
+initCategoryCards();
+
 scheduleIdle(() => {
   initWebGL().catch((err) => {
     console.error('WebGL init failed:', err);
