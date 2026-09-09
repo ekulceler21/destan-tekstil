@@ -591,6 +591,18 @@ header {
   pointer-events: none;
 }
 
+.list__img {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: clamp(84px, 20vw, 140px);
+  object-fit: cover;
+  object-position: center bottom;
+  z-index: 0;
+  pointer-events: none;
+}
+
 .list__text {
   position: relative;
   z-index: 2;
