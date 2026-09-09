@@ -557,7 +557,7 @@ header {
   gap: clamp(14px, 2vw, 22px);
   padding: clamp(16px, 2vw, 22px) clamp(16px, 2vw, 24px);
   width: 850px;
-  height: 170px;
+  height: 150px;
   overflow: hidden;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
@@ -724,7 +724,7 @@ header {
   .list__row {
     width: 100%;
     height: auto;
-    aspect-ratio: 2.6 / 1;
+    aspect-ratio: 3 / 1;
     gap: clamp(10px, 1.5vw, 14px);
     padding: clamp(12px, 2vw, 16px);
     padding-right: calc(clamp(12px, 2vw, 16px) + 34px);
