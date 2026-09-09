@@ -1,23 +1,26 @@
-/* ── Destan Tekstil tasarım dili — turuncu (tüm sayfalar) ─────────── */
-    :root {
-    --bg: #fff6ee;
+/* ── Destan Tekstil tasarım dili — ana sayfa paleti (tüm sayfalar) ── */
+:root {
+    --bg: #e7e7e7;
     --bg-soft: #ffffff;
-    --fg: #8a3a0b;
-    --fg-dim: #bd7948;
-    --accent: #f97316;
-    --accent-dim: #c2410c;
-    --accent-b: #ff7c1a;
-    --accent-b-dim: #ea580c;
-    --rule: rgba(194, 65, 12, 0.16);
-    --rule-b: rgba(255, 124, 26, 0.2);
-    --sombra: rgba(255, 124, 26, 0.1);
-    --sombra-hover: rgba(249, 115, 22, 0.2);
-    --sombra-b: rgba(255, 124, 26, 0.24);
-    --gradient: linear-gradient(135deg, #ff7c1a, #fbbf24);
+    --panel: #f4f4f4;
+    --fg: #2f353a;
+    --fg-dim: #6e747b;
+    --accent: #f58220;
+    --accent-dim: #d96e08;
+    --accent-b: #c49a63;
+    --accent-b-dim: #a9823f;
+    --header-bg: #343434;
+    --header-fg: #c49a63;
+    --rule: rgba(196, 154, 99, 0.3);
+    --rule-b: rgba(245, 130, 32, 0.35);
+    --sombra: rgba(245, 130, 32, 0.1);
+    --sombra-hover: rgba(245, 130, 32, 0.22);
+    --sombra-b: rgba(245, 130, 32, 0.22);
+    --gradient: linear-gradient(135deg, #f58220, #c49a63);
 
-    --font-display: 'Anton', sans-serif;
-    --font-body: 'Oswald', sans-serif;
-    --font-mono: 'IBM Plex Mono', monospace;
+    --font-display: 'Anton', 'Arial Black', sans-serif;
+    --font-body: 'Oswald', system-ui, sans-serif;
+    --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
 
     --gutter: clamp(20px, 4vw, 64px);
     --max-width: 1480px;
@@ -67,7 +70,7 @@ header {
     position: sticky;
     top: 0;
     z-index: 1000;
-    background: rgba(255, 246, 238, 0.82);
+    background: rgba(52, 52, 52, 0.92);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--rule);
@@ -95,14 +98,14 @@ header {
     width: clamp(3.6rem, 7vh, 5rem);
     aspect-ratio: 1;
     object-fit: contain;
-    filter: drop-shadow(0 0 10px rgba(255, 124, 26, 0.45)) drop-shadow(0 2px 8px rgba(249, 115, 22, 0.35));
+    filter: drop-shadow(0 0 10px rgba(196, 154, 99, 0.45)) drop-shadow(0 2px 8px rgba(196, 154, 99, 0.35));
 position: relative;
     z-index: 1;
 }
 
 .header-container .logo:hover {
     transform: scale(1.05);
-    filter: drop-shadow(0 0 18px rgba(255, 124, 26, 0.65)) drop-shadow(0 2px 12px rgba(249, 115, 22, 0.45));
+    filter: drop-shadow(0 0 18px rgba(196, 154, 99, 0.6)) drop-shadow(0 2px 12px rgba(196, 154, 99, 0.4));
 }
 
 .nav-wrapper {
@@ -118,7 +121,7 @@ position: relative;
 }
 
 .header-container nav ul li a {
-    color: var(--fg);
+    color: var(--header-fg);
     font-family: var(--font-mono);
     font-size: 11px;
     font-weight: 400;
@@ -153,7 +156,7 @@ position: relative;
 .header-container .cart-icon {
     display: flex;
     align-items: center;
-    color: var(--accent);
+    color: var(--header-fg);
     font-size: 1.25rem;
     position: relative;
     opacity: 1;
@@ -180,7 +183,7 @@ position: relative;
     background: none;
     border: none;
     font-size: 1.6rem;
-    color: var(--fg);
+    color: var(--accent);
     cursor: pointer;
     z-index: 1001;
 }
@@ -201,7 +204,7 @@ position: relative;
         top: 100%;
         left: 0;
         width: 100%;
-        background-color: var(--bg);
+        background-color: var(--panel);
         border-bottom: 1px solid var(--rule);
         padding: 1rem 0;
         text-align: center;
@@ -275,9 +278,9 @@ position: relative;
     right: -100%;
     width: 280px;
     height: 100%;
-    background-color: var(--bg-soft);
+    background-color: var(--panel);
     border-left: 1px solid var(--rule);
-    box-shadow: -5px 0 15px rgba(194, 65, 12, 0.12);
+    box-shadow: -5px 0 15px rgba(47, 53, 58, 0.14);
     transition: right 0.3s ease-in-out;
     z-index: 999;
     padding-top: 5rem;
@@ -304,7 +307,7 @@ position: relative;
 }
 
 .mobile-menu ul li a:hover {
-    background-color: var(--bg);
+    background-color: var(--bg-soft);
     color: var(--accent);
 }
 
@@ -314,7 +317,7 @@ position: relative;
 }
 
 .mobile-menu ul li.mobile-menu-cart a:hover {
-    background: #7c2406;
+    background: var(--accent);
     color: #ffffff;
 }
 
@@ -379,7 +382,7 @@ position: relative;
 .add-to-cart-quick:hover,
 .size-option:hover,
 .color-option:hover {
-    color: var(--accent-b-dim);
+    color: var(--accent);
     opacity: 1;
 }
 
@@ -507,7 +510,7 @@ position: relative;
 
 .product-card:hover {
     transform: translateY(-8px);
-    box-shadow: 0 18px 40px var(--sombra-hover);
+    box-shadow: 0 18px 40px rgba(245, 130, 32, 0.2);
 }
 
 .product-badge {
@@ -543,8 +546,8 @@ position: relative;
     gap: 0.6rem;
     width: 100%;
     aspect-ratio: 4 / 5;
-    background: linear-gradient(135deg, #ffe2c4, #fff1e4);
-    color: var(--accent-dim);
+    background: linear-gradient(135deg, #f4f4f4, #ffffff);
+    color: var(--accent);
     font-family: var(--font-display);
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -572,7 +575,7 @@ position: relative;
 }
 
 .product-card:hover .product-title {
-    color: var(--accent-dim);
+    color: var(--accent);
 }
 
 .product-colors {
@@ -595,7 +598,7 @@ position: relative;
 .product-price {
     font-family: var(--font-mono);
     font-size: 0.9rem;
-    color: var(--accent-dim);
+    color: var(--accent);
     font-weight: 500;
     margin-bottom: 0.75rem;
 }
@@ -750,7 +753,7 @@ position: relative;
 
 .quantity-btn:hover {
     background-color: var(--bg-soft);
-    color: var(--accent-b-dim);
+    color: var(--accent);
 }
 
 .quantity-input {
@@ -777,7 +780,7 @@ position: relative;
 .zoom-overlay {
     position: fixed;
     inset: 0;
-    background-color: rgba(194, 65, 12, 0.92);
+    background-color: rgba(47, 53, 58, 0.92);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -868,7 +871,7 @@ position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #ffe2c4, #fff1e4);
+    background: linear-gradient(135deg, #f4f4f4, #ffffff);
     color: var(--accent);
     font-size: 1.6rem;
 }
@@ -896,7 +899,7 @@ position: relative;
 }
 
 .quantity-controls button:hover {
-    background-color: var(--accent-b);
+    background-color: var(--accent);
     color: #ffffff;
 }
 
@@ -988,7 +991,7 @@ position: relative;
     justify-content: space-between;
     font-size: 1.15rem;
     font-weight: 500;
-    color: var(--accent-dim);
+    color: var(--accent);
     padding-top: 1rem;
     border-top: 1px solid var(--rule);
     margin-top: 0.5rem;
@@ -1049,7 +1052,7 @@ position: relative;
 .hero {
     min-height: 70vh;
     background:
-        radial-gradient(ellipse 70% 60% at 50% 45%, rgba(255, 124, 26, 0.16) 0%, transparent 70%),
+        radial-gradient(ellipse 70% 60% at 50% 45%, rgba(245, 130, 32, 0.12) 0%, transparent 70%),
         var(--bg);
     color: var(--fg);
     display: flex;
@@ -1080,7 +1083,7 @@ position: relative;
 footer {
     background-color: var(--bg);
     color: var(--fg);
-    border-top: 1px solid var(--rule);
+    border-top: 1px solid var(--accent-b);
     padding: clamp(48px, 8vh, 80px) var(--gutter);
 }
 
@@ -1100,20 +1103,20 @@ footer {
     aspect-ratio: 1;
     margin-bottom: 1rem;
     object-fit: contain;
-    filter: drop-shadow(0 0 18px rgba(255, 124, 26, 0.5)) drop-shadow(0 4px 14px rgba(249, 115, 22, 0.4));
+    filter: drop-shadow(0 0 18px rgba(196, 154, 99, 0.5)) drop-shadow(0 4px 14px rgba(196, 154, 99, 0.4));
 }
 
 .footer-tagline {
     font-family: var(--font-body);
     font-size: 0.95rem;
     line-height: 1.6;
-    color: var(--fg-dim);
+    color: var(--fg);
     margin-bottom: 1.5rem;
     letter-spacing: 0.01em;
 }
 
 .footer-column h3 {
-    color: var(--accent-dim);
+    color: var(--accent);
     margin-bottom: 1.25rem;
     font-size: 1.05rem;
     letter-spacing: 0.06em;
@@ -1250,14 +1253,14 @@ footer {
     aspect-ratio: 1;
     margin-bottom: clamp(16px, 2.5vh, 24px);
     object-fit: contain;
-    filter: drop-shadow(0 0 20px rgba(255, 124, 26, 0.55)) drop-shadow(0 4px 16px rgba(249, 115, 22, 0.4));
+    filter: drop-shadow(0 0 20px rgba(196, 154, 99, 0.55)) drop-shadow(0 4px 16px rgba(196, 154, 99, 0.4));
 }
 
 .page-intro-overlay .section-label {
     text-align: left;
     margin-bottom: clamp(12px, 2.5vh, 20px);
     align-self: flex-start;
-    color: var(--fg-dim);
+    color: var(--accent-b);
     letter-spacing: 0.34em;
 }
 
@@ -1272,7 +1275,7 @@ footer {
     letter-spacing: 0.02em;
     text-transform: uppercase;
     max-width: 24ch;
-    text-shadow: 0 0 24px rgba(255, 124, 26, 0.3);
+    text-shadow: 0 0 24px rgba(245, 130, 32, 0.3);
 }
 
 .galeri-3d-scene {
@@ -1295,7 +1298,7 @@ footer {
     pointer-events: none;
     background:
         radial-gradient(ellipse 70% 60% at 50% 45%, transparent 0%, var(--bg) 82%),
-        linear-gradient(to bottom, rgba(255, 246, 238, 0.5) 0%, transparent 30%, transparent 68%, rgba(255, 246, 238, 0.7) 100%);
+        linear-gradient(to bottom, rgba(231, 231, 231, 0.55) 0%, transparent 30%, transparent 68%, rgba(231, 231, 231, 0.75) 100%);
 }
 
 .galeri-3d-scene canvas {
@@ -1337,7 +1340,7 @@ footer {
 }
 
 .galeri-3d-tip-price {
-    color: var(--accent-b-dim);
+    color: var(--accent);
     font-weight: 500;
 }
 
@@ -1423,7 +1426,7 @@ footer {
     border-radius: 50%;
     background: var(--bg-soft);
     border: 1px solid var(--rule-b);
-    box-shadow: 0 8px 22px rgba(138, 58, 11, 0.22);
+    box-shadow: 0 8px 22px rgba(47, 53, 58, 0.22);
     color: var(--fg);
     text-decoration: none;
     transition: transform 0.2s ease, box-shadow 0.25s ease;
@@ -1431,7 +1434,7 @@ footer {
 
 .contact-bar__link:hover {
     transform: translateY(-2px);
-    box-shadow: 0 12px 28px rgba(138, 58, 11, 0.3);
+    box-shadow: 0 12px 28px rgba(47, 53, 58, 0.3);
 }
 
 .contact-bar__link:active {
@@ -1461,7 +1464,7 @@ footer {
 }
 
 .contact-bar__link--phone {
-    color: var(--accent-b);
+    color: var(--accent);
 }
 
 .contact-bar__link--mail {
@@ -1488,7 +1491,7 @@ footer {
     padding: 13px 22px;
     border-radius: 999px;
     background-color: var(--fg);
-    color: #fff6ee;
+    color: #ffffff;
     font-family: var(--font-body);
     font-weight: bold;
     font-size: 0.95rem;
@@ -1496,7 +1499,7 @@ footer {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    box-shadow: 0 10px 30px rgba(138, 58, 11, 0.35);
+    box-shadow: 0 10px 30px rgba(47, 53, 58, 0.35);
     z-index: 1200;
     pointer-events: none;
     transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.15), opacity 0.3s ease;
@@ -1517,7 +1520,7 @@ footer {
     height: 20px;
     border-radius: 50%;
     background-color: var(--accent-b);
-    color: #fff6ee;
+    color: #ffffff;
     font-size: 0.75rem;
 }
 
@@ -1531,10 +1534,10 @@ footer {
     align-items: center;
     gap: 6px;
     background: none;
-    border: 1px solid var(--rule);
+    border: 1px solid rgba(196, 154, 99, 0.5);
     border-radius: 999px;
     padding: 0.4rem 0.85rem;
-    color: var(--fg);
+    color: var(--header-fg);
     font-family: var(--font-mono);
     font-size: 11px;
     letter-spacing: 0.14em;
@@ -1546,9 +1549,9 @@ footer {
 
 .dil-tusu:hover,
 .dil-secici.acik .dil-tusu {
-    border-color: var(--accent-b);
+    border-color: var(--accent);
     color: var(--accent);
-    background: rgba(249, 115, 22, 0.08);
+    background: rgba(245, 130, 32, 0.15);
 }
 
 .dil-tusu .icon {
@@ -1565,7 +1568,7 @@ footer {
     background: var(--bg-soft);
     border: 1px solid var(--rule-b);
     border-radius: 12px;
-    box-shadow: 0 14px 34px rgba(194, 65, 12, 0.16);
+    box-shadow: 0 14px 34px rgba(47, 53, 58, 0.18);
     padding: 6px;
     display: none;
     z-index: 1200;
@@ -1593,7 +1596,7 @@ footer {
 }
 
 .dil-liste > li[data-dil]:hover {
-    background: rgba(249, 115, 22, 0.1);
+    background: rgba(245, 130, 32, 0.12);
     color: var(--accent);
 }
 
