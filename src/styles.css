@@ -615,9 +615,20 @@ header {
   flex: 1 1 280px;
 }
 
+.list__text::before {
+  content: '';
+  position: absolute;
+  inset: -22px -40px -22px -24px;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.88) 0%, rgba(255, 255, 255, 0.5) 55%, transparent 100%);
+  z-index: -1;
+  pointer-events: none;
+}
+
 .list__name,
 .list__meta {
-  text-shadow: none;
+  text-shadow:
+    0 0 8px rgba(255, 255, 255, 0.65),
+    0 0 20px rgba(255, 255, 255, 0.45);
 }
 
 .list__name {
