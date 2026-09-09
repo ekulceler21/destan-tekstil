@@ -593,12 +593,14 @@ header {
 
 .list__img {
   position: absolute;
-  left: 0;
+  left: 50%;
   bottom: 0;
-  width: 100%;
-  height: clamp(84px, 20vw, 140px);
+  transform: translateX(-50%);
+  width: 850px;
+  height: 315px;
+  max-width: none;
   object-fit: cover;
-  object-position: center bottom;
+  object-position: center;
   z-index: 0;
   pointer-events: none;
 }
