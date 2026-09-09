@@ -540,6 +540,7 @@ header {
 .list {
   list-style: none;
   display: grid;
+  justify-items: center;
   gap: clamp(14px, 2vw, 20px);
 }
 
@@ -555,6 +556,8 @@ header {
   align-items: center;
   gap: clamp(14px, 2vw, 22px);
   padding: clamp(16px, 2vw, 22px) clamp(16px, 2vw, 24px);
+  width: 850px;
+  height: 315px;
   overflow: hidden;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
@@ -593,14 +596,10 @@ header {
 
 .list__img {
   position: absolute;
-  left: 50%;
-  bottom: 0;
-  transform: translateX(-50%);
-  width: 850px;
-  height: 315px;
-  max-width: none;
-  object-fit: cover;
-  object-position: center;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
   z-index: 0;
   pointer-events: none;
 }
@@ -711,6 +710,7 @@ header {
 
 @media (max-width: 600px) {
   .list__row {
+    width: 100%;
     gap: clamp(10px, 1.5vw, 14px);
     padding: clamp(12px, 2vw, 16px);
     padding-right: calc(clamp(12px, 2vw, 16px) + 34px);
